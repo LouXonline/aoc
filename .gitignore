@@ -1,0 +1,10 @@
+# Advent of Code
+**input.txt
+.env
+
+# Python
+__pychache__/
+*.pyc
+
+# Virtual environment
+.venv/
