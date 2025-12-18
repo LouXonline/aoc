@@ -11,7 +11,6 @@ aoc/
 ├── requirements.txt
 ├── setup.sh
 ├── aoc_input.py
-├── run_day.py
 └── 2015/
 ├── day01/
 │   └── solution.py
@@ -19,7 +18,6 @@ aoc/
 └── solution.py
 
 * `aoc_input.py` → Handles automatic input download and caching.
-* `run_day.py` → Runs any day's solution automatically.
 * `2015/dayXX/solution.py` → Individual solution files.
 * `.venv/` → Python virtual environment (ignored by git).
 * `.env` → Stores your Advent of Code session cookie (ignored by git).
