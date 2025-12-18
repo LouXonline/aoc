@@ -36,7 +36,7 @@ cd aoc
 2. Run the setup script:
 
 chmod +x setup.sh
-./setup.sh
+source ./setup.sh
 
 * Creates a virtual environment `.venv` if missing.
 * Installs dependencies from `requirements.txt`.
@@ -52,7 +52,7 @@ AOC_SESSION=your_session_cookie_here
 
 ---
 
-4. Activate the virtual environment:
+4. Activate the virtual environment (if not already activated):
 
 source .venv/bin/activate
 
@@ -62,11 +62,11 @@ source .venv/bin/activate
 
 5. Run any day's solution automatically:
 
-python run_day.py YEAR DAY
+python3 <YEAR>.day<XX>.py
 
 Example:
 
-python run_day.py 2015 1
+python3 2015.day01.py
 
 * Downloads the input if missing and caches it in `2015/day01/input.txt`.
 * Runs the corresponding solution file automatically.
@@ -78,7 +78,7 @@ python run_day.py 2015 1
 * Create a folder for the day, e.g., `2015/day02/`.
 * Add `solution.py` with a `solve(data)` function:
 
-# 2015/day02/solution.py
+# 2015/day01/solution.py
 
 def solve(data):
 # Your solution here
@@ -86,8 +86,7 @@ print(len(data))
 
 if **name** == "**main**":
 from aoc_input import get_day_input
-year, day = 2015, 2
-input_data = get_day_input(year, day)
+input_data = get_day_input()
 solve(input_data)
 
 * `run_day.py` will automatically run this solution.
