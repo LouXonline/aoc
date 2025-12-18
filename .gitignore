@@ -2,9 +2,15 @@
 **input.txt
 .env
 
+# Build artifacts
+*build/
+
 # Python
 __pychache__/
 *.pyc
 
 # Virtual environment
 .venv/
+
+# Visual Studio Code
+.vscode/

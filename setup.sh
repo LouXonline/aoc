@@ -28,9 +28,12 @@ if [ ! -f ".env" ]; then
 fi
 
 # 5. Optional: set PYTHONPATH to repo root
-export PYTHONPATH="$(pwd)"
-echo "PYTHONPATH set to: $PYTHONPATH"
+# export PYTHONPATH="$(pwd)"
+# echo "PYTHONPATH set to: $PYTHONPATH"
 
 echo ""
-echo "Setup complete. Virtual environment is active (if it was sourced)"
-echo "Run any solution with: python <year>/day<XX>/solution.py"
+echo "Setup complete. Virtual environment is active."
+echo "Make sure you have set up your .env file with your AoC session cookie."
+echo "AOC_SESSION value can be found in your browser cookies after logging into Advent of Code."
+# echo ""
+# echo "Run any solution with: python3 <YEAR>/day<XX>/solution.py"
