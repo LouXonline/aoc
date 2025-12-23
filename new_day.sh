@@ -37,9 +37,4 @@ for TARGET in "${!FILES[@]}"; do
     fi
 done
 
-# --- CMake step ---
-
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
-
 cmake ..
