@@ -2,7 +2,7 @@
 
 # Check if script is sourced
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "ERROR: You must run this script with 'source setup.sh' or '. setup.sh'"
+    echo "ERROR: You must run this script with 'source ./setup.sh' or '. setup.sh'"
     exit 1
 fi
 

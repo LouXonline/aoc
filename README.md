@@ -1,121 +1,214 @@
 # Advent of Code Solutions
 
-This repository contains my personal attempts to solve the Advent of Code challenges. It includes scripts to automatically download each day's input, cache it, and run the corresponding solution in an isolated Python environment.
-
----
+This repository contains my personal attempts to solve Advent of Code challenges. It includes solutions in Python, C, and C++, with scripts to automatically handle input downloading, caching, and compilation.
 
 ## Repository Structure
 
 aoc/
 ├── .gitignore
 ├── requirements.txt
-├── setup.sh
-├── aoc_input.py
-└── 2015/
-├── day01/
-│   └── solution.py
-└── day02/
-└── solution.py
+├── setup.sh           # Setup script to create Python environment and dependencies
+├── new_day.sh         # Script to create a new day's folder and solution templates
+├── aoc_input.py       # Python helper for downloading and caching input
+├── common/            # Shared C/C++ utilities
+├── templates/         # Templates used by new_day.sh
+├── 2015/
+│   ├── day01/
+│   │   ├── solution.py
+│   │   ├── solution.c
+│   │   └── solution.cpp
+│   └── day02/
+│       └── solution.py
+└── build/             # Build folder for C/C++ executables (created by CMake)
 
-* `aoc_input.py` → Handles automatic input download and caching.
-* `2015/dayXX/solution.py` → Individual solution files.
-* `.venv/` → Python virtual environment (ignored by git).
-* `.env` → Stores your Advent of Code session cookie (ignored by git).
+- `setup.sh` → Sets up the Python virtual environment `.venv`, installs dependencies from `requirements.txt`, and creates `.env` for your AoC session cookie.  
+- `new_day.sh` → Automates creation of a new day's folder with solution templates for Python, C, and C++, and an empty `input.txt`.  
+- `aoc_input.py` → Handles downloading and caching input for Python solutions.  
+- `common/` → Shared C/C++ utilities (headers and source files).  
+- `templates/` → Template files for new Python, C, and C++ solutions.  
+- `2015/dayXX/solution.py` → Python solution for a specific day.  
+- `2015/dayXX/solution.c / .cpp` → C/C++ solutions for a specific day.  
+- `build/` → Build folder for C/C++ executables. All C/C++ solutions are compiled from the root `CMakeLists.txt`.
 
 ---
 
-## Setup Instructions (Ubuntu/Linux)
+## Setup Instructions (Ubuntu/Linux/macOS)
 
 1. Clone the repository:
 
+```bash
 git clone <your_repo_url>
 cd aoc
+```
 
 2. Run the setup script:
 
-chmod +x setup.sh
+```bash
+# Only needed if you get permission errors
+# chmod +x setup.sh
 source ./setup.sh
+```
 
-* Creates a virtual environment `.venv` if missing.
-* Installs dependencies from `requirements.txt`.
-* Creates `.env` file for your AoC session cookie if missing.
+- Creates a Python virtual environment `.venv` if missing.  
+- Installs dependencies from `requirements.txt`.  
+- Creates `.env` for your Advent of Code session cookie if missing.  
 
-3. Add your AoC session cookie:
+> **Note:** `chmod +x` is only needed if you see “Permission denied” errors when running the script. On Windows, it is generally not required; you can run `bash setup.sh` directly.
 
-* Log in to [Advent of Code](https://adventofcode.com).
-* Open browser developer tools → Application/Storage → Cookies → `session`.
-* Copy the value and replace the placeholder in `.env`:
+---
 
+## Setting up your AoC session cookie (optional but recommended)
+
+All solutions (Python, C, C++) read `input.txt`. The Python helper `aoc_input.py` can automatically download the input if you have set your session cookie.  
+
+**Steps to get your session cookie:**
+
+1. Log in to [Advent of Code](https://adventofcode.com).  
+2. Open your browser’s developer tools:  
+   - **Chrome/Edge:** `F12` → Application → Storage → Cookies → `adventofcode.com`  
+   - **Firefox:** `F12` → Storage → Cookies → `adventofcode.com`  
+   - **Safari:** Develop → Show Web Inspector → Storage → Cookies  
+3. Find the cookie named `session`.  
+4. Copy its value.  
+5. Paste it into `.env` in the project root:
+
+```text
 AOC_SESSION=your_session_cookie_here
+```
+
+> If the cookie is set, Python solutions will automatically download `input.txt` for the day.  
+> If no cookie is provided, `input.txt` is still created by `new_day.sh` in the correct `year/day` folder; you can manually copy the input from the website into this file.
 
 ---
 
-4. Activate the virtual environment (if not already activated):
+## Creating a New Day
 
-source .venv/bin/activate
+1. Use the `new_day.sh` script to create a folder for the day with all templates:
 
-* Ensures Python uses the local environment and installed dependencies.
+```bash
+# Only needed if you get permission errors
+# chmod +x new_day.sh
+./new_day.sh 2015 03
+```
 
----
+- This will automatically create `2015/day03/` with:
+  - `solution.py` → Python solution template using `aoc_input.py` to get the input.
+  - `solution.c` → C solution template.
+  - `solution.cpp` → C++ solution template.
+  - `input.txt` → empty file.  
 
-5. Run any day's solution automatically:
+> **All template files are automatically written by the script. No manual saving is required** after running it. You only need to edit the files to implement your solutions.
 
-python3 <YEAR>.day<XX>.py
+2. Example Python template:
 
-Example:
-
-python3 2015.day01.py
-
-* Downloads the input if missing and caches it in `2015/day01/input.txt`.
-* Runs the corresponding solution file automatically.
-
----
-
-6. Writing new solutions:
-
-* Create a folder for the day, e.g., `2015/day02/`.
-* Add `solution.py` with a `solve(data)` function:
-
-# 2015/day01/solution.py
-
+```python
+# 2015/day03/solution.py
 def solve(data):
-# Your solution here
-print(len(data))
+    # Your solution here
+    print(len(data))
 
-if **name** == "**main**":
-from aoc_input import get_day_input
-input_data = get_day_input()
-solve(input_data)
-
-* `run_day.py` will automatically run this solution.
+if __name__ == "__main__":
+    from aoc_input import get_day_input
+    data = get_day_input()
+    solve(data)
+```
 
 ---
 
-7. Notes:
+## Running Python Solutions
 
-* `.gitignore` ensures the following are **not committed**:
+1. Input files are cached per day in the corresponding folder, e.g., `2015/day03/input.txt`.  
+2. Run a solution:
 
-**pycache**/
-*.pyc
-.venv/
-**/input.txt
+```bash
+python3 2015/day03/solution.py
+```
+
+- Requires that the `.env` session cookie is set (optional but recommended) and `.venv` is activated.  
+- If no cookie is set, Python will still attempt to read `input.txt` if you manually added it.
+
+---
+
+## Running C/C++ Solutions
+
+1. Create a build folder (if not already):
+
+```bash
+mkdir -p build
+cd build
+```
+
+2. Generate CMake build files from the root folder:
+
+```bash
+cmake ..
+```
+
+- Automatically detects all `solution.c` and `solution.cpp` files in the project and links them with `common` utilities.
+
+3. Build all executables with `make`:
+
+```bash
+make
+```
+
+- Executables are generated in `build/<year>/dayXX/` with names:
+  - `solution_c` → C
+  - `solution_cpp` → C++
+
+4. Run a C solution:
+
+```bash
+./2015/day03/solution_c
+```
+
+- Reads `input.txt` from the corresponding day folder via the `AOC_DATA_DIR` macro.
+
+5. Run a C++ solution:
+
+```bash
+./2015/day03/solution_cpp
+```
+
+---
+
+## Notes
+
+- `.gitignore` ensures the following are not committed:
+
+```
+# Advent of Code
+**input.txt
 .env
 
-* `.env` keeps your session cookie private.
-* Inputs are cached per day to avoid repeated downloads.
-* Python uses the virtual environment `.venv` to isolate dependencies.
+# Build artifacts
+*build/
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Visual Studio Code
+.vscode/
+```
+
+- `.env` keeps your AoC session private.  
+- Inputs are cached per day to avoid repeated downloads.  
+- Python virtual environment `.venv` isolates dependencies.  
+- CMake automatically organizes build outputs by day and year.  
 
 ---
 
-8. Optional:
+## Optional
 
-* To persist `AOC_SESSION` in your shell permanently:
+- Persist `AOC_SESSION` permanently in your shell:
 
+```bash
 echo 'export AOC_SESSION="your_session_cookie_here"' >> ~/.bashrc
 source ~/.bashrc
+```
 
-* Not needed if using `.env` with `python-dotenv`.
-
----
-
-This setup allows anyone to clone the repo, run setup, and immediately execute any day's solution with cached inputs.
+- Not required if using `.env` with python-dotenv.
