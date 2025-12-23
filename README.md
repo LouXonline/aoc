@@ -3,7 +3,7 @@
 This repository contains my personal attempts to solve Advent of Code challenges. It includes solutions in Python, C, and C++, with scripts to automatically handle input downloading, caching, and compilation.
 
 ## Repository Structure
-
+```
 aoc/
 ├── .gitignore
 ├── requirements.txt
@@ -20,6 +20,7 @@ aoc/
 │   └── day02/
 │       └── solution.py
 └── build/             # Build folder for C/C++ executables (created by CMake)
+```
 
 - `setup.sh` → Sets up the Python virtual environment `.venv`, installs dependencies from `requirements.txt`, and creates `.env` for your AoC session cookie.  
 - `new_day.sh` → Automates creation of a new day's folder with solution templates for Python, C, and C++, and an empty `input.txt`.  
