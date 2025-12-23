@@ -5,11 +5,14 @@
 #define STR(x) #x
 #define XSTR(x) STR(x)
 
-// --- Solver ---
+// --- Solver function ---
 int solve(const std::string &data) {
-    // Implement your solution here
-    // Return an integer result
-    return 0;
+    int floor = 0;
+    for (char c : data) {
+        if (c == '(') floor++;
+        else if (c == ')') floor--;
+    }
+    return floor;
 }
 
 // --- Main ---
@@ -23,7 +26,7 @@ int main() {
     }
 
     int result = solve(data);
-    std::cout << "Result: " << result << std::endl;
+    std::cout << "Final floor: " << result << std::endl;
 
     return 0;
 }

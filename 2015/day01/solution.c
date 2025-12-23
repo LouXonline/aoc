@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "aoc_utils.h"
+
+#define STR(x) #x
+#define XSTR(x) STR(x)
+
 int solve_part_one(const char *data) {
     int floor = 0;
 
@@ -15,34 +20,16 @@ int solve_part_one(const char *data) {
 }
 
 int main(void) {
-    FILE *file = fopen("input.txt", "r");
-    if (!file) {
-        perror("Failed to open input.txt");
-        return 1;
-    }
-
-    // turn file content into string
-    fseek(file, 0, SEEK_END);
-    long size = ftell(file);
-    if (size == -1) {
-        perror("ftell failed");
-        fclose(file);
-        return 1;
-    }
-    fseek(file, 0, SEEK_SET);
-    char *data = malloc((size_t)size + 1);
+    const char *path = XSTR(AOC_DATA_DIR) "/input.txt";
+    char *data = aoc_read_file(path);
     if (!data) {
-        perror("Failed to allocate memory");
-        fclose(file);
+        perror("No data input");
         return 1;
     }
-
-    size_t nread = fread(data, 1, (size_t)size, file);
-    data[nread] = '\0';
 
     int floor = solve_part_one(data);
 
-    fclose(file);
+    free(data);
 
     printf("Final floor: %d\n", floor);
     return 0;
