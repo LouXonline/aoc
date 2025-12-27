@@ -2,6 +2,7 @@
 #define AOC_UTILS_HPP
 
 #include <string>
+#include <algorithm> // for std::min in applications
 
 namespace aoc {
 

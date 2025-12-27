@@ -15,7 +15,6 @@ int solve(const std::string &data) {
 // --- Main ---
 int main() {
     std::string path = std::string(XSTR(AOC_DATA_DIR)) + "/input.txt";
-
     std::string data = aoc::read_file(path);
     if (data.empty()) {
         std::cerr << "Failed to read " << path << std::endl;
