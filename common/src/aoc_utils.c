@@ -6,38 +6,29 @@
 
 char *aoc_read_file(const char *path) {
     FILE *f = fopen(path, "r");
-    if (!f) return NULL;
-    if (fseek(f, 0, SEEK_END) == 0) {
-        long size = ftell(f);
-        if (size >= 0) {
-            rewind(f);
-            char *buf = malloc((size_t)size + 1);
-            if (!buf) { fclose(f); return NULL; }
-            size_t n = fread(buf, 1, (size_t)size, f);
-            buf[n] = '\0';
-            fclose(f);
-            return buf;
-        }
+    if (!f) {
+        fprintf(stderr, "Failed to open %s\n", path);
+        return NULL;
     }
-    /* fallback: read until EOF in chunks */
+
+    fseek(f, 0, SEEK_END);
+    long size = ftell(f);
     rewind(f);
-    size_t cap = 4096, len = 0;
-    char *buf = malloc(cap);
-    if (!buf) { fclose(f); return NULL; }
-    size_t n;
-    while ((n = fread(buf + len, 1, cap - len, f)) > 0) {
-        len += n;
-        if (len == cap) {
-            cap *= 2;
-            char *tmp = realloc(buf, cap);
-            if (!tmp) { free(buf); fclose(f); return NULL; }
-            buf = tmp;
-        }
+
+    char *buf = malloc(size + 1);
+    if (!buf) {
+        fprintf(stderr, "Failed to allocate memory for %s\n", path);
+        fclose(f);
+        return NULL;
     }
-    buf[len] = '\0';
+
+    fread(buf, 1, size, f);
+    buf[size] = '\0';
+
     fclose(f);
     return buf;
 }
+
 
 char **aoc_split_lines(const char *s, size_t *out_count) {
     char *dup = strdup(s ? s : "");

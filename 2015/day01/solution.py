@@ -1,11 +1,3 @@
-import sys
-from pathlib import Path
-
-# Add repo root to Python path so imports from root work
-sys.path.append(str(Path(__file__).resolve().parents[2]))
-
-from aoc_input import get_day_input
-
 def solve_part_one(data):
     floor = 0
     for char in data:
@@ -27,6 +19,14 @@ def solve_part_two(data):
     return -1  # If basement is never reached
 
 if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    # Add repo root to Python path so imports from root work
+    sys.path.append(str(Path(__file__).resolve().parents[2]))
+
+    from aoc_input import get_day_input
+
     data = get_day_input()
 
     floor = solve_part_one(data)
