@@ -15,8 +15,7 @@ declare -A FILES=(
   ["solution.py"]="solution.py.tpl"
   ["solution.c"]="solution.c.tpl"
   ["solution.cpp"]="solution.cpp.tpl"
-  ["input.txt"]=""
-  ["CMakeLists.txt"]="CMakeLists.txt.tpl"
+  #["input.txt"]=""
 )
 
 for TARGET in "${!FILES[@]}"; do
@@ -36,5 +35,3 @@ for TARGET in "${!FILES[@]}"; do
         echo "Created $DEST"
     fi
 done
-
-cmake ..

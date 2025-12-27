@@ -19,12 +19,12 @@ int solve_part_one(const std::string &data) {
 int solve_part_two(const std::string &data) {
     int floor = 0;
 
-    for (size_t i = 0; i < data.size(); ++i) {
-        if (data[i] == '(') floor++;
-        else if (data[i] == ')') floor--;
+    for (char c: data) {
+        if (c == '(') floor++;
+        else if (c == ')') floor--;
 
         if (floor == -1) {
-            return i + 1; // 1-based index
+            return &c - &data[0] + 1; // Return position (1-based)
         }
     }
     return -1; // Not found
